@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="articleViewItem" type="com.billwetter.haveyouheard.ui.trending.ArticleViewItem"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/standard_padding"
+            android:paddingBottom="@dimen/standard_padding"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackground">
+        <ImageView
+                android:id="@+id/articleImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@{articleViewItem.article.title}"
+                app:imgSrcAsCircle="@{articleViewItem.article.urlToImage}"
+                app:layout_constraintTop_toTopOf="@id/articleTitle"
+                app:layout_constraintBottom_toBottomOf="@id/articleTitle"
+                app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+                android:id="@+id/articleTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:layout_marginStart="@dimen/standard_padding"
+                android:text="@{articleViewItem.article.title}"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/articleImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Hurricane hits West Coast of the USA" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

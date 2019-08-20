@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Have you heard?</string>
+    <string name="title_trending">Trending</string>
+    <string name="title_bookmarks">Bookmarks</string>
+    <string name="title_settings">Settings</string>
+    <string name="trending_news">Trending News</string>
+</resources>
