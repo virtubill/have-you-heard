@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="viewModel" type="com.billwetter.haveyouheard.ui.article.ArticleViewModel" />
+    </data>
+    <ScrollView
+            android:id="@+id/articleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/articleImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:layout_marginStart="@dimen/screen_padding"
+                    android:layout_marginEnd="@dimen/screen_padding"
+                    app:imgSrcSizeToFit="@{viewModel.articleViewItem.imgSrc}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                    android:id="@+id/articleTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_padding"
+                    android:text="@{viewModel.articleViewItem.title}"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintStart_toStartOf="@id/articleImage"
+                    app:layout_constraintEnd_toEndOf="@id/articleImage"
+                    app:layout_constraintTop_toBottomOf="@id/articleImage"
+                    app:layout_constraintHorizontal_bias="0.0" />
+
+            <TextView
+                    android:id="@+id/articleAuthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_padding"
+                    app:textOrHide="@{viewModel.articleViewItem.author}"
+                    app:layout_constraintTop_toBottomOf="@id/articleTitle"
+                    app:layout_constraintStart_toStartOf="@id/articleTitle"
+                    tools:text="Hello" />
+
+            <TextView
+                    android:id="@+id/articleSource"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_padding"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:textOrHide="@{viewModel.articleViewItem.source}"
+                    app:layout_constraintTop_toBottomOf="@id/articleTitle"
+                    app:layout_constraintStart_toEndOf="@id/articleAuthor"
+                    tools:text="ESPN" />
+
+            <TextView
+                    android:id="@+id/articleContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_padding"
+                    android:text="@{viewModel.articleViewItem.content}"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintTop_toBottomOf="@id/articleSource"
+                    app:layout_constraintStart_toStartOf="@id/articleTitle"
+                    app:layout_constraintEnd_toEndOf="@id/articleTitle" />
+            <TextView
+                    android:id="@+id/seeSource"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:text="@string/see_original_article"
+                    android:textColor="@color/color_accent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{ () -> viewModel.openArticleSource() }"
+                    app:layout_constraintTop_toBottomOf="@id/articleContent"
+                    app:layout_constraintStart_toStartOf="@id/articleContent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

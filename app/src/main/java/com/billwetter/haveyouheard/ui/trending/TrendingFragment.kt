@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.billwetter.haveyouheard.BR
 import com.billwetter.haveyouheard.R
 import com.billwetter.haveyouheard.databinding.TrendingFragmentBinding
+import com.billwetter.haveyouheard.ui.article.ArticleActivity
 import com.billwetter.haveyouheard.ui.common.BaseFragment
 import com.billwetter.haveyouheard.ui.common.BindingViewItem
 import com.billwetter.haveyouheard.ui.common.CommonBindingAdapter
@@ -16,8 +17,8 @@ class TrendingFragment : BaseFragment<TrendingViewModel, TrendingFragmentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = CommonBindingAdapter(viewModel.trendingArticles) {
-            (it as? ArticleViewItem)?.let {
-
+            (it as? ArticleViewItem)?.let { articleViewItem ->
+                ArticleActivity.create(context!!, articleViewItem.article)
             }
         }
     }

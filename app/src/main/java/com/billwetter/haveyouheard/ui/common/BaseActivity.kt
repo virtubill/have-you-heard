@@ -31,7 +31,6 @@ abstract class BaseActivity<T: BaseViewModel, B: ViewDataBinding>(private val vi
         binding = DataBindingUtil.setContentView(this, layoutId)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
         binding.setVariable(BR.viewModel, viewModel)
-
         prepareView()
     }
 

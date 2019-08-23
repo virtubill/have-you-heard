@@ -1,4 +1,4 @@
-package com.billwetter.haveyourheard.data.internal
+package com.billwetter.haveyourheard.data.internal.trending
 
 import com.billwetter.haveyourheard.data.internal.api.NewsService
 import com.billwetter.haveyourheard.data.model.Article

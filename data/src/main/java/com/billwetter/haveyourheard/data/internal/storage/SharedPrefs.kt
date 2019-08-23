@@ -1,4 +1,4 @@
-package com.billwetter.haveyourheard.data.internal
+package com.billwetter.haveyourheard.data.internal.storage
 
 import android.content.SharedPreferences
 

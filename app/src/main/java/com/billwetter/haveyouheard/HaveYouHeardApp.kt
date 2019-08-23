@@ -2,6 +2,7 @@ package com.billwetter.haveyouheard
 
 import android.app.Activity
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.billwetter.haveyouheard.di.AppModule
 import com.billwetter.haveyouheard.di.DaggerAppComponent
 import dagger.android.AndroidInjector
@@ -16,6 +17,7 @@ class HaveYouHeardApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()

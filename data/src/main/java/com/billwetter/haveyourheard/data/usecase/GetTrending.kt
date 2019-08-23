@@ -2,7 +2,7 @@ package com.billwetter.haveyourheard.data.usecase
 
 import com.billwetter.haveyourheard.data.Result
 import com.billwetter.haveyourheard.data.UseCase
-import com.billwetter.haveyourheard.data.internal.TrendingRepository
+import com.billwetter.haveyourheard.data.internal.trending.TrendingRepository
 import com.billwetter.haveyourheard.data.model.Article
 import com.billwetter.haveyourheard.data.toResult
 import io.reactivex.Flowable
