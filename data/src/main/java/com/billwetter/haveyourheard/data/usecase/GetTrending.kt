@@ -8,8 +8,8 @@ import com.billwetter.haveyourheard.data.toResult
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class GetTrending @Inject constructor(private val trendingRepository: TrendingRepository) : UseCase<List<Article>> {
+class GetTrending @Inject constructor(private val trendingApiRepository: TrendingRepository) : UseCase<List<Article>> {
     override fun execute(): Flowable<Result<List<Article>>> {
-        return trendingRepository.get("us").toResult()
+        return trendingApiRepository.get("us").toResult()
     }
 }

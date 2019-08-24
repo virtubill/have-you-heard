@@ -25,5 +25,4 @@ class HaveYouHeardApp : Application(), HasActivityInjector {
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
-
 }

@@ -28,7 +28,6 @@ class TrendingViewModel @Inject constructor(private val trending: GetTrending) :
     }
 
     private fun addArticles(articles: List<Article>) {
-        var index = trendingArticles.size.toLong()
-        trendingArticles.addAll(articles.map { ArticleViewItem(it, index++) })
+        trendingArticles.addAll(articles.map { ArticleViewItem(it, it.url.hashCode().toLong()) })
     }
 }

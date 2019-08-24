@@ -33,8 +33,8 @@ private fun <T> handleSuccess(it: T): Result<T> {
 private fun <T> handleError(throwable: Throwable): Result<T> {
     return when (throwable) {
         is HttpException -> handleHttpException(throwable)
-        is UnknownHostException -> Result.Failure("There is a problem with your network connection, please try again later")
-        is IOException -> Result.Failure("There was an error processing this request, please try again later.")
+        is UnknownHostException -> Result.Failure("There is a problem with your network connection, please try again later", throwable)
+        is IOException -> Result.Failure("There was an error processing this request, please try again later.", throwable)
         else -> throw throwable
     }
 }
@@ -42,7 +42,7 @@ private fun <T> handleError(throwable: Throwable): Result<T> {
 private fun <T> handleHttpException(ex: HttpException): Result<T> {
     return when (ex.code()) {
         403 -> Result.AuthError("Unauthorized")
-        else -> Result.Failure("Server has encountered an error processing your request, please try again later.")
+        else -> Result.Failure("Server has encountered an error processing your request, please try again later.", ex)
     }
 }
 

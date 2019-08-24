@@ -2,8 +2,12 @@ package com.billwetter.haveyourheard.data
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import com.billwetter.haveyourheard.data.internal.CommonSchedulerProvider
+import com.billwetter.haveyourheard.data.internal.SchedulerProvider
 import com.billwetter.haveyourheard.data.internal.api.HeaderAuthInterceptor
 import com.billwetter.haveyourheard.data.internal.api.NewsService
+import com.billwetter.haveyourheard.data.internal.trending.TrendingApiRepository
+import com.billwetter.haveyourheard.data.internal.trending.TrendingRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -18,6 +22,17 @@ import javax.inject.Singleton
 
 @Module
 class DataModule {
+
+    @Provides
+    internal fun providesTrendingRepository(newsService: NewsService, schedulerProvider: SchedulerProvider): TrendingRepository {
+        return TrendingApiRepository(newsService, schedulerProvider)
+    }
+
+    @Singleton
+    @Provides
+    internal fun providesSchedulerProvider(): SchedulerProvider {
+        return CommonSchedulerProvider()
+    }
 
     // API SERVICES
     @Singleton
