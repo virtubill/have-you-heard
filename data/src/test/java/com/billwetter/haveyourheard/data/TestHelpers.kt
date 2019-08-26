@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.util.concurrent.Executor
 
-fun mockSchedulers() = object : SchedulerProvider {
+internal fun mockSchedulers() = object : SchedulerProvider {
     override fun subscribeOn(): Scheduler = object : Scheduler() {
         override fun createWorker(): Scheduler.Worker {
             return ExecutorScheduler.ExecutorWorker(Executor { it.run() }, true)

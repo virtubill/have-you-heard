@@ -1,8 +1,9 @@
 package com.billwetter.haveyourheard.data.internal.trending
 
 import com.billwetter.haveyourheard.data.model.Article
+import com.billwetter.haveyourheard.data.model.TrendingParams
 import io.reactivex.Flowable
 
-interface TrendingRepository {
-    fun get(country: String) : Flowable<List<Article>>
+internal interface TrendingRepository {
+    fun get(params: TrendingParams) : Flowable<List<Article>>
 }

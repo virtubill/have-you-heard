@@ -4,7 +4,7 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class CommonSchedulerProvider : SchedulerProvider {
+internal class CommonSchedulerProvider : SchedulerProvider {
     override fun subscribeOn(): Scheduler {
         return Schedulers.io()
     }

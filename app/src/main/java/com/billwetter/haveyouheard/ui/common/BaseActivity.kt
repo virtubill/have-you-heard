@@ -27,7 +27,7 @@ abstract class BaseActivity<T: BaseViewModel, B: ViewDataBinding>(private val vi
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
+        title = ""
         binding = DataBindingUtil.setContentView(this, layoutId)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
         binding.setVariable(BR.viewModel, viewModel)

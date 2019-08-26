@@ -109,7 +109,7 @@ fun TextView.textOrHide(content: String?) {
     }
 }
 
-fun clearImage(holder: CommonBindingAdapter.CommonViewHolder) {
+fun clearImage(holder: CommonPageAdapter.CommonViewHolder) {
     Glide.with(holder.binding.root.context).clear(holder.binding.root)
 }
 

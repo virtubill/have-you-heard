@@ -11,11 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.billwetter.haveyouheard.ui.common.viewmodel.BaseViewModel
 import dagger.android.support.AndroidSupportInjection
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseFragment<T: BaseViewModel, B: ViewDataBinding>(private val viewModelClass: Class<T>, private val layoutId: Int) : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var disposables: CompositeDisposable
 
     lateinit var viewModel : T
     lateinit var binding : B
@@ -35,8 +38,15 @@ abstract class BaseFragment<T: BaseViewModel, B: ViewDataBinding>(private val vi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        disposables = CompositeDisposable()
         prepareView()
         activity?.title = title
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposables.clear()
     }
 
     abstract fun prepareView()

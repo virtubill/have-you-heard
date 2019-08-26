@@ -1,33 +1,27 @@
 package com.billwetter.haveyouheard.ui.trending
 
-import androidx.databinding.ObservableArrayList
+import androidx.paging.PagedList
+import androidx.paging.RxPagedListBuilder
 import com.billwetter.haveyouheard.ui.common.BindingViewItem
 import com.billwetter.haveyouheard.ui.common.viewmodel.BaseViewModel
-import com.billwetter.haveyourheard.data.Result
-import com.billwetter.haveyourheard.data.model.Article
 import com.billwetter.haveyourheard.data.usecase.GetTrending
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import javax.inject.Inject
 
-class TrendingViewModel @Inject constructor(private val trending: GetTrending) : BaseViewModel() {
-    val trendingArticles = ObservableArrayList<BindingViewItem>()
-    private var currentPage = 0
+class TrendingViewModel @Inject constructor(trending: GetTrending) : BaseViewModel() {
+
+    val trendingArticles: Flowable<PagedList<BindingViewItem>>
 
     init {
-        currentPage = 0
-        loadNext()
-    }
+        //TODO: move datasource code to Dagger
+        val factory = TrendingDataSourceFactory(trending, disposables)
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setInitialLoadSizeHint(40)
+            .setEnablePlaceholders(false)
+            .build()
 
-    fun loadNext() {
-        //TOD): add pagination
-        disposables.add(trending.execute().observeOn(AndroidSchedulers.mainThread()).subscribe {
-            when(it) {
-                is Result.Success -> addArticles(it.value)
-            }
-        })
-    }
-
-    private fun addArticles(articles: List<Article>) {
-        trendingArticles.addAll(articles.map { ArticleViewItem(it, it.url.hashCode().toLong()) })
+        trendingArticles = RxPagedListBuilder(factory, config).buildFlowable(BackpressureStrategy.LATEST)
     }
 }

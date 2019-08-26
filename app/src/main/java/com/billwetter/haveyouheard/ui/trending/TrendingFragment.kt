@@ -6,17 +6,18 @@ import com.billwetter.haveyouheard.R
 import com.billwetter.haveyouheard.databinding.TrendingFragmentBinding
 import com.billwetter.haveyouheard.ui.article.ArticleActivity
 import com.billwetter.haveyouheard.ui.common.BaseFragment
-import com.billwetter.haveyouheard.ui.common.BindingViewItem
-import com.billwetter.haveyouheard.ui.common.CommonBindingAdapter
+import com.billwetter.haveyouheard.ui.common.CommonPageAdapter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.trending_fragment.*
 
 
 class TrendingFragment : BaseFragment<TrendingViewModel, TrendingFragmentBinding>(TrendingViewModel::class.java, R.layout.trending_fragment) {
-    private lateinit var adapter: CommonBindingAdapter<BindingViewItem>
+    private lateinit var adapter: CommonPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = CommonBindingAdapter(viewModel.trendingArticles) {
+        adapter = CommonPageAdapter {
             (it as? ArticleViewItem)?.let { articleViewItem ->
                 ArticleActivity.create(context!!, articleViewItem.article)
             }
@@ -27,5 +28,6 @@ class TrendingFragment : BaseFragment<TrendingViewModel, TrendingFragmentBinding
         title = getString(R.string.trending_news)
         binding.setVariable(BR.viewModel, viewModel)
         trendingNews.adapter = adapter
+        disposables.add(viewModel.trendingArticles.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { adapter.submitList(it) })
     }
 }

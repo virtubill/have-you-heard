@@ -8,9 +8,4 @@ open class BaseViewModel(protected val disposables: CompositeDisposable = Compos
         disposables.clear()
         super.onCleared()
     }
-
-    protected fun initScreenWithLoading() {
-        disposables.clear()
-    }
-
 }

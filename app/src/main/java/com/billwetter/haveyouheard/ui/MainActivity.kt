@@ -1,11 +1,11 @@
 package com.billwetter.haveyouheard.ui
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.billwetter.haveyouheard.R
 import com.billwetter.haveyouheard.databinding.MainActivityBinding
 import com.billwetter.haveyouheard.ui.common.BaseActivity
 import com.billwetter.haveyouheard.ui.trending.TrendingFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : BaseActivity<MainViewModel, MainActivityBinding>(MainViewModel::class.java, R.layout.main_activity) {
