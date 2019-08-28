@@ -2,13 +2,15 @@ package com.billwetter.haveyouheard.ui.article
 
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.billwetter.haveyouheard.R
 import com.billwetter.haveyouheard.databinding.ArticleActivityBinding
 import com.billwetter.haveyouheard.ui.common.BaseActivity
+import com.billwetter.haveyouheard.ui.common.findDrawable
+import com.billwetter.haveyouheard.ui.common.openUri
 import com.billwetter.haveyourheard.data.model.Article
-
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ArticleActivityBinding>(ArticleViewModel::class.java, R.layout.article_activity) {
     override fun prepareView() {
@@ -20,8 +22,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ArticleActivityBinding>(A
         }
 
         viewModel.showSource.observe(this, Observer {
-            val openBrowserIntent = Intent(Intent.ACTION_VIEW, it)
-            startActivity(openBrowserIntent)
+            openUri(it)
         })
     }
 
@@ -31,8 +32,28 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ArticleActivityBinding>(A
                 onBackPressed()
                 true
             }
+            R.id.bookmark_article -> {
+                viewModel.toggleBookmark()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.bookmark_menu, menu)
+        // lneed to start watching this after menu is inflated
+        viewModel.hasBookmark.observe(this, Observer { isBookmarked ->
+            menu?.findItem(R.id.bookmark_article)?.apply {
+                icon = if (isBookmarked) {
+                    findDrawable(R.drawable.ic_bookmark)
+                } else {
+                    findDrawable(R.drawable.ic_bookmark_border)
+                }
+
+            }
+        })
+        return true
     }
 
     companion object {

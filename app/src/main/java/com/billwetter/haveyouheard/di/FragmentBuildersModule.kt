@@ -1,5 +1,6 @@
 package com.billwetter.haveyouheard.di
 
+import com.billwetter.haveyouheard.ui.bookmarks.BookmarksFragment
 import com.billwetter.haveyouheard.ui.trending.TrendingFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -11,4 +12,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun bindTrendingFragment(): TrendingFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindBookmarksFragment(): BookmarksFragment
 }

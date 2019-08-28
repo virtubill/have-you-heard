@@ -1,6 +1,6 @@
 package com.billwetter.haveyourheard.data.internal.trending
 
-import com.billwetter.haveyourheard.data.internal.SchedulerProvider
+import com.billwetter.haveyourheard.data.SchedulerProvider
 import com.billwetter.haveyourheard.data.internal.api.NewsService
 import com.billwetter.haveyourheard.data.model.Article
 import com.billwetter.haveyourheard.data.model.TrendingParams
@@ -12,7 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 internal class TrendingApiRepository @Inject constructor(private val newsService: NewsService,
-                                                private val schedulerProvider: SchedulerProvider) : TrendingRepository {
+                                                private val schedulerProvider: SchedulerProvider
+) : TrendingRepository {
     override fun get(params: TrendingParams): Flowable<List<Article>> {
         return if (params.containsKey("country")) {
             newsService.getTrending(params)

@@ -1,4 +1,4 @@
-package com.billwetter.haveyouheard.ui.trending
+package com.billwetter.haveyouheard.ui.common
 
 import com.billwetter.haveyouheard.BR
 import com.billwetter.haveyouheard.R

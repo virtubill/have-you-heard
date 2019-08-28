@@ -1,10 +1,10 @@
-package com.billwetter.haveyourheard.data.internal
+package com.billwetter.haveyourheard.data
 
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-internal class CommonSchedulerProvider : SchedulerProvider {
+class CommonSchedulerProvider : SchedulerProvider {
     override fun subscribeOn(): Scheduler {
         return Schedulers.io()
     }

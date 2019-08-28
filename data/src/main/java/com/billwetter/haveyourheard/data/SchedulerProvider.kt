@@ -1,8 +1,8 @@
-package com.billwetter.haveyourheard.data.internal
+package com.billwetter.haveyourheard.data
 
 import io.reactivex.Scheduler
 
-internal interface SchedulerProvider {
+interface SchedulerProvider {
     fun subscribeOn(): Scheduler
     fun observeOn(): Scheduler
 }

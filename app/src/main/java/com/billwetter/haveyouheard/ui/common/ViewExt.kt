@@ -1,18 +1,22 @@
 package com.billwetter.haveyouheard.ui.common
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.os.Bundle
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import java.io.Serializable
 
 /**
  * Utility functions added to views
@@ -113,12 +117,25 @@ fun clearImage(holder: CommonPageAdapter.CommonViewHolder) {
     Glide.with(holder.binding.root.context).clear(holder.binding.root)
 }
 
-fun Map<String, Serializable>?.toBundle(): Bundle? {
-    return if (this != null) {
-        val bundle = Bundle()
-        forEach { (key, value) -> bundle.putSerializable(key, value) }
-        bundle
+fun Activity.findDrawable(@DrawableRes drawableId: Int): Drawable? {
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+        getDrawable(drawableId)
     } else {
-        null
+        @Suppress("DEPRECATION")
+        resources.getDrawable(drawableId)
+    }
+}
+
+fun Activity.openUri(uri: Uri) {
+    val browser = CustomTabsClient.getPackageName(baseContext, null)
+    if (browser != null) {
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        customTabsIntent.intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+        customTabsIntent.intent.`package` = browser
+        builder.build().launchUrl(this, uri)
+    } else {
+        val browserIntent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(browserIntent)
     }
 }
