@@ -20,7 +20,7 @@ class BookmarksDataSource @Inject constructor(private val getBookmarks: GetBookm
                     it.value.map { article ->
                         ArticleViewItem(
                             article,
-                            article.url.hashCode().toLong()
+                            article.localId
                         )
                     },
                     null,

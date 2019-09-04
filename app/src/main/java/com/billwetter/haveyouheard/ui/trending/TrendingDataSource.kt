@@ -19,7 +19,7 @@ class TrendingDataSource @Inject constructor(private val getTrending: GetTrendin
                     it.value.map { article ->
                         ArticleViewItem(
                             article,
-                            article.url.hashCode().toLong()
+                            article.localId
                         )
                     },
                     null,
@@ -36,7 +36,7 @@ class TrendingDataSource @Inject constructor(private val getTrending: GetTrendin
                     it.value.map { article ->
                         ArticleViewItem(
                             article,
-                            article.url.hashCode().toLong()
+                            article.localId
                         )
                     },
                     params.key + 1)

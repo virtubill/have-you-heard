@@ -1,8 +1,15 @@
-package com.billwetter.haveyourheard.data
+package com.billwetter.haveyourheard.data.di
 
 import android.app.Application
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import androidx.room.Room
+import androidx.work.Configuration
+import androidx.work.WorkManager
+import com.billwetter.haveyourheard.data.BuildConfig
+import com.billwetter.haveyourheard.data.CommonSchedulerProvider
+import com.billwetter.haveyourheard.data.SchedulerProvider
+import com.billwetter.haveyourheard.data.background.HaveYouSeenWorkerFactory
 import com.billwetter.haveyourheard.data.internal.api.HeaderAuthInterceptor
 import com.billwetter.haveyourheard.data.internal.api.NewsService
 import com.billwetter.haveyourheard.data.internal.bookmarks.BookmarksRepository
@@ -24,9 +31,22 @@ import javax.inject.Singleton
 @Module
 class DataModule {
 
+    @Singleton
     @Provides
-    internal fun providesTrendingRepository(newsService: NewsService, schedulerProvider: SchedulerProvider): TrendingRepository {
-        return TrendingApiRepository(newsService, schedulerProvider)
+    fun providesWorkManager(context: Context, workFactory: HaveYouSeenWorkerFactory): WorkManager {
+        WorkManager.initialize(
+            context,
+            Configuration.Builder()
+                .setWorkerFactory(workFactory)
+                .build()
+        )
+
+        return WorkManager.getInstance(context)
+    }
+
+    @Provides
+    internal fun providesTrendingRepository(appDatabase: AppDatabase, newsService: NewsService, schedulerProvider: SchedulerProvider): TrendingRepository {
+        return TrendingApiRepository(appDatabase.articleDao(), newsService, schedulerProvider)
     }
 
     @Provides
@@ -46,6 +66,7 @@ class DataModule {
             applicationContext,
             AppDatabase::class.java,
             "articles-cache")
+            .fallbackToDestructiveMigration() //TODO: add a migration plan
             .build()
     }
 

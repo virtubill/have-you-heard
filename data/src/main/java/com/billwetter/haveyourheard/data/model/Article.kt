@@ -9,6 +9,10 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class Article(
+    // since on unique id is provided
+    // we are faking a unique id using the url hashcode
+    // (not 100% guaranteed but will work for demo purposes)
+    @PrimaryKey var localId: Long,
     val author: String? = null,
     val content: String? = null,
     val description: String? = null,
@@ -17,13 +21,6 @@ data class Article(
     val source: Source = Source(),
     val title: String = "",
     val url: String = "",
-    val urlToImage: String = "",
-    // since on unique id is provided
-    // we are faking a unique id using the url hashcode
-    // (not 100% guaranteed but will work for demo purposes)
-    @PrimaryKey var localId: Long
-) : Parcelable {
-    init {
-        localId = url.hashCode().toLong()
-    }
-}
+    val urlToImage: String? = "",
+    val bookmarked: Boolean = false
+) : Parcelable

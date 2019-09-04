@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.article.ArticleActivity"/>
+        <provider
+                android:name="androidx.work.impl.WorkManagerInitializer"
+                android:authorities="${applicationId}.workmanager-init"
+                android:enabled="false"
+                android:exported="false"
+                tools:node="remove" />
     </application>
 
 </manifest>
